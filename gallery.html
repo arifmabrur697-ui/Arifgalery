@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeri Pribadi Saya</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .header h1 {
+      color: white;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-email {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+    }
+
+    .logout-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Main Container */
+    .container {
+      flex: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      width: 100%;
+    }
+
+    /* Upload Section */
+    .upload-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      margin-bottom: 40px;
+    }
+
+    .upload-card h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+
+    .upload-area {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    input[type="file"] {
+      flex: 1;
+      min-width: 250px;
+      padding: 12px;
+      border: 2px dashed #667eea;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    input[type="file"]:hover {
+      border-color: #764ba2;
+      background: #f8f9ff;
+    }
+
+    .upload-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .upload-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .upload-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Gallery Section */
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .gallery-header h2 {
+      color: white;
+      font-size: 28px;
+    }
+
+    .photo-count {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .gallery-item {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .image-container {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+      background: #f0f0f0;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-item:hover .image-overlay {
+      opacity: 1;
+    }
+
+    .action-btn {
+      background: white;
+      color: #333;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .action-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .delete-btn {
+      background: #ff4757;
+      color: white;
+    }
+
+    .delete-btn:hover {
+      background: #ff3838;
+    }
+
+    .item-info {
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .file-name {
+      font-size: 13px;
+      color: #666;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .file-size {
+      font-size: 12px;
+      color: #999;
+      margin-left: 10px;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: white;
+    }
+
+    .empty-state svg {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+
+    .empty-state h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .empty-state p {
+      opacity: 0.8;
+      font-size: 16px;
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      color: white;
+      padding: 40px;
+      font-size: 18px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+      }
+
+      .upload-area {
+        flex-direction: column;
+      }
+
+      input[type="file"] {
+        width: 100%;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📸 Galeri Pribadi Saya</h1>
+    <div class="user-info">
+      <span class="user-email" id="userEmail">Loading...</span>
+      <button class="logout-btn" id="logoutBtn">Keluar</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="upload-card">
+      <h2>Upload Foto Baru</h2>
+      <div class="upload-area">
+        <input type="file" id="fileInput" accept="image/*" multiple>
+        <button class="upload-btn" id="uploadBtn">
+          <span id="uploadText">📤 Upload Foto</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="gallery-header">
+      <h2>Koleksi Foto Saya</h2>
+      <div class="photo-count" id="photoCount">0 Foto</div>
+    </div>
+
+    <div id="galleryContainer">
+      <div class="loading">Memuat galeri...</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+<script>
+  const SUPABASE_URL = 'https://nfsjebcittzopcndvyrg.supabase.co';
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mc2plYmNpdHR6b3BjbmR2eXJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjExMzkwNzIsImV4cCI6MjA3NjcxNTA3Mn0.2X0N2zWbzxt6wyHH6knPdfi-LmwPbbF6jCmhhLcALKY";
+
+  const { createClient } = supabase;
+  const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  let currentUser = null;
+
+  // 🔐 Cek auth user
+  async function checkAuth() {
+    const { data } = await supabaseClient.auth.getSession();
+    if (!data.session) {
+      alert("Silakan login terlebih dahulu!");
+      window.location.href = "login.html";
+      return false;
+    }
+    currentUser = data.session.user;
+    document.getElementById('userEmail').textContent = currentUser.email;
+    return true;
+  }
+
+  // 📤 Upload foto
+  document.getElementById('uploadBtn').onclick = async () => {
+    const files = document.getElementById('fileInput').files;
+    if (files.length === 0) {
+      alert("Pilih foto terlebih dahulu!");
+      return;
+    }
+
+    const uploadBtn = document.getElementById('uploadBtn');
+    const uploadText = document.getElementById('uploadText');
+    uploadBtn.disabled = true;
+    uploadText.textContent = '⏳ Mengupload...';
+
+    let successCount = 0;
+    for (const file of files) {
+      const filePath = `${currentUser.id}/${Date.now()}_${file.name}`;
+      const { error } = await supabaseClient.storage
+        .from("gallery")
+        .upload(filePath, file);
+      if (!error) successCount++;
+    }
+
+    uploadBtn.disabled = false;
+    uploadText.textContent = '📤 Upload Foto';
+    document.getElementById('fileInput').value = "";
+
+    if (successCount > 0) {
+      alert(`Berhasil upload ${successCount} foto!`);
+      loadGallery();
+    } else {
+      alert("Upload gagal. Pastikan RLS sudah diatur dengan benar.");
+    }
+  };
+
+  // 🗑️ Hapus foto
+  async function deletePhoto(fileName) {
+    if (!confirm("Yakin ingin menghapus foto ini?")) return;
+
+    const filePath = `${currentUser.id}/${fileName}`;
+    const { error } = await supabaseClient.storage
+      .from("gallery")
+      .remove([filePath]);
+
+    if (error) {
+      alert("Gagal menghapus foto: " + error.message);
+    } else {
+      alert("Foto berhasil dihapus!");
+      loadGallery();
+    }
+  }
+
+  // 💾 Download foto
+  function downloadPhoto(url, fileName) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.target = '_blank';
+    a.click();
+  }
+
+  // 📏 Format ukuran file
+  function formatFileSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  // 🖼️ Load galeri (PRIVATE bucket friendly)
+  async function loadGallery() {
+    const container = document.getElementById('galleryContainer');
+    const photoCount = document.getElementById('photoCount');
+    
+    container.innerHTML = '<div class="loading">Memuat galeri...</div>';
+
+    const { data, error } = await supabaseClient.storage
+      .from("gallery")
+      .list(`${currentUser.id}/`, { 
+        limit: 100,
+        sortBy: { column: 'created_at', order: 'desc' }
+      });
+
+    if (error) {
+      console.error(error);
+      container.innerHTML = '<div class="empty-state"><p>Gagal memuat galeri</p></div>';
+      return;
+    }
+
+    const files = data.filter(item => item.name);
+    photoCount.textContent = `${files.length} Foto`;
+
+    if (files.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2
+              l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6
+              20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0
+              00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+          <h3>Belum Ada Foto</h3>
+          <p>Upload foto pertama Anda sekarang!</p>
+        </div>
+      `;
+      return;
+    }
+
+    const grid = document.createElement('div');
+    grid.className = 'gallery-grid';
+
+    for (const file of files) {
+      // ✅ BUAT SIGNED URL untuk akses file private
+      const { data: urlData, error: urlError } = await supabaseClient
+        .storage
+        .from("gallery")
+        .createSignedUrl(`${currentUser.id}/${file.name}`, 60 * 60); // 1 jam
+
+      if (urlError) {
+        console.error("Gagal membuat signed URL:", urlError.message);
+        continue;
+      }
+
+      const signedUrl = urlData?.signedUrl;
+
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML = `
+        <div class="image-container">
+          <img src="${signedUrl}" alt="${file.name}" loading="lazy">
+          <div class="image-overlay">
+            <button class="action-btn" onclick="downloadPhoto('${signedUrl}', '${file.name}')">
+              ⬇️ Download
+            </button>
+            <button class="action-btn delete-btn" onclick="deletePhoto('${file.name}')">
+              🗑️ Hapus
+            </button>
+          </div>
+        </div>
+        <div class="item-info">
+          <span class="file-name" title="${file.name}">${file.name}</span>
+          <span class="file-size">${formatFileSize(file.metadata?.size || 0)}</span>
+        </div>
+      `;
+      grid.appendChild(item);
+    }
+
+    container.innerHTML = '';
+    container.appendChild(grid);
+  }
+
+  // 🚪 Logout
+  document.getElementById('logoutBtn').onclick = async () => {
+    await supabaseClient.auth.signOut();
+    window.location.href = "login.html";
+  };
+
+  // 🌟 Global functions
+  window.deletePhoto = deletePhoto;
+  window.downloadPhoto = downloadPhoto;
+
+  // 🚀 Init
+  checkAuth().then(success => {
+    if (success) loadGallery();
+  });
+</script>
+
+</body>
+</html>

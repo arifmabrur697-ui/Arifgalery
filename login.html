@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Supabase Auth</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background"></div>
+    
+    <div class="container">
+        <!-- Auth Box (Login/Register) -->
+        <div class="auth-box" id="auth-box">
+            <div class="logo">
+                <h1>Welcome</h1>
+                <p>Masuk ke akun Anda</p>
+            </div>
+
+            <div id="alert-container"></div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('login')">Login</button>
+                <button class="tab" onclick="switchTab('register')">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="login-form" class="form-content active">
+                <form onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="login-email" placeholder="nama@email.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="login-password" placeholder="Masukkan password" required>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="#" onclick="handleForgotPassword(); return false;">Lupa Password?</a>
+                    </div>
+                    <button type="submit" class="btn" id="login-btn">Masuk</button>
+                </form>
+
+                <div class="divider">
+                    <span>atau lanjutkan dengan</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="social-btn" onclick="handleSocialLogin('google')">Google</button>
+                    <button class="social-btn" onclick="handleSocialLogin('github')">GitHub</button>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-form" class="form-content">
+                <form onsubmit="handleRegister(event)">
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="register-email" placeholder="nama@email.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="register-password" placeholder="Minimal 8 karakter" required minlength="8">
+                    </div>
+                    <div class="input-group">
+                        <label>Konfirmasi Password</label>
+                        <input type="password" id="register-confirm" placeholder="Ulangi password" required>
+                    </div>
+                    <button type="submit" class="btn" id="register-btn">Daftar</button>
+                </form>
+
+                <div class="divider">
+                    <span>atau daftar dengan</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="social-btn" onclick="handleSocialLogin('google')">Google</button>
+                    <button class="social-btn" onclick="handleSocialLogin('github')">GitHub</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase JS Library -->
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>    
+    <!-- File auth.js Anda -->
+    <!-- Ganti src dengan path file auth.js Anda -->
+    <script src="auth.js"></script>
+</body>
+</html>
